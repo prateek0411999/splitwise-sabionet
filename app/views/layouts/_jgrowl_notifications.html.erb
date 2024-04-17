@@ -1,0 +1,10 @@
+<% if flash[:notice].present? %>
+  <script>
+    $.jGrowl("<%= flash[:notice] %>", { theme: 'success' });
+  </script>
+<% end %>
+<% if flash[:alert].present? %>
+  <script>
+    $.jGrowl("<%= flash[:alert] %>", { theme: 'error' });
+  </script>
+<% end %>

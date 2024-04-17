@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <%= 'Sabionet Assessment | Prateek Sharma' %>
+    </title>
+    <%= render 'layouts/header' %>
+  </head>
+  <% if ['sessions', 'registrations'].include?(controller_name) %>
+    <body class="text-center">
+      <main class="form-signin">
+        <%= yield %>
+      </main>
+    </body>
+  <% else %>
+    <body class="d-flex flex-column h-100">
+      <%= render 'layouts/top_nav' %>
+      <main class="flex-shrink-0">
+        <div class="container">
+          <%= yield %>
+        </div>
+      </main>
+    </body>
+  <% end %>
+  <%= render 'layouts/jgrowl_notifications' %>
+</html>
