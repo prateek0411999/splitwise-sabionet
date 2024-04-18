@@ -5,7 +5,8 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.integer :payer_id
       t.float :total_amount
       t.integer :created_by_id
-      t.integer :type
+      t.integer :expense_type
+      t.integer :split_type
 
       t.timestamps
     end

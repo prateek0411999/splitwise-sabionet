@@ -1,0 +1,10 @@
+<h1>Expense Details</h1>
+<p><strong>Description</strong> <%= @expense.description %></p>
+<p><strong>Total Amount:</strong> <%= @expense.total_amount %></p>
+
+<h2>Expense Sharers:</h2>
+<ul>
+  <% @expense.expense_shares.each do |sharer| %>
+    <li><%= sharer.user.email %> - <%= sharer.amount %></li>
+  <% end %>
+</ul>
