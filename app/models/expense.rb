@@ -1,5 +1,5 @@
 class Expense < ApplicationRecord
-  attr_accessor :sharer_ids
+  attr_accessor :sharer_ids, :custom_sharer_expenses
 
   belongs_to :payer, class_name: 'User'
   belongs_to :created_by, class_name: 'User'
@@ -18,10 +18,19 @@ class Expense < ApplicationRecord
     unequally: 1
   }
 
-  after_create :create_sharers, if: -> { non_itemized? }
+  after_create :create_non_itemized_sharers, if: -> { non_itemized? }
+  after_create :create_itemized_sharers, if: -> { itemized? }
 
+  def create_non_itemized_sharers
+    case split_type
+    when 'equally'
+      create_equally_split_sharers
+    when 'unequally'
+      create_unequally_split_sharers
+    end
+  end
 
-  def create_sharers
+  def create_itemized_sharers
     case split_type
     when 'equally'
       create_equally_split_sharers
@@ -41,5 +50,9 @@ class Expense < ApplicationRecord
   end
 
   def create_unequally_split_sharers
+    custom_sharer_expenses.each do |user_id, prct|
+      amount = total_amount * (prct["percentage"].to_f / 100.to_f)
+      expense_sharers.create(user_id: user_id, amount: amount)
+    end
   end
 end

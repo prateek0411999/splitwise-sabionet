@@ -17,3 +17,5 @@ require("jgrowl")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+require("./expense_form")

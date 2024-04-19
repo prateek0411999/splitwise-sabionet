@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :expense_sharers
-  has_many :expenses, foreign_key: 'payer_id'
+  has_many :expense_sharers, dependent: :destroy
+  has_many :expenses, foreign_key: 'payer_id', dependent: :destroy
 end
