@@ -45,14 +45,14 @@ class Expense < ApplicationRecord
     total_sharers = sharer_ids.count
     amount_per_sharer = total_amount / total_sharers
     sharer_ids.each do |user_id|
-      self.expense_sharers.create(user_id: user_id, amount: amount_per_sharer )
+      self.expense_sharers.create(user_id: user_id, amount: amount_per_sharer&.round(2))
     end
   end
 
   def create_unequally_split_sharers
     custom_sharer_expenses.each do |user_id, prct|
       amount = total_amount * (prct["percentage"].to_f / 100.to_f)
-      expense_sharers.create(user_id: user_id, amount: amount)
+      expense_sharers.create(user_id: user_id, amount: amount&.round(2))
     end
   end
 end

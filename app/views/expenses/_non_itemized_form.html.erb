@@ -1,0 +1,26 @@
+<div>
+    <div class="form-group">
+        <%= form.label :sharers %>
+        <%= form.select :sharer_ids, options_for_select(users.map{ |user| [user.name, user.id] }), { include_blank: false }, {multiple: true, required: true, class: "select-selectize"}%>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :total_amount %>
+        <%= form.text_field :total_amount, class: "form-control", placeholder: "0.0", required: true, disabled: true %>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :payer_id, "Paid by" %>
+        <%= form.collection_select :payer_id, users, :id, :name, { selected: current_user.id, class: 'select-selectize' }, prompt: "Select payer",  required: true %>
+        
+        <%= form.label :split_type, " and Split" %>
+        <%= form.select :split_type, { "Equally" => :equally, "Unequally" => :unequally } %>
+    </div>
+
+    <div id="share_non_itemized_unequally" style="display: none">
+        <h6>  Split by Percentage </h6>
+        <div class="form-group"> 
+        </div>
+    </div>
+
+</div>
