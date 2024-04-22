@@ -1,1 +1,53 @@
-adfasdfasdfafasf
+
+    <!-- Inserted item creation section -->
+    <div class="form-group">
+        <%= form.label :payer_id, "Paid by" %>
+        <%= form.collection_select :payer_id, users, :id, :name, { selected: current_user.id }, class: 'form-control',  required: true %>
+    </div>   
+    <h3>Items</h3>
+    <p><i>Note: Amount reflecting on sharers doesn't include tax and tip </i> </p>
+    <div id="item-container">
+        <!-- Item inputs will be dynamically added here -->
+    </div>
+
+    <button class="btn btn-primary" type="button" id="add-item">Add Item</button>
+  <!-- End of inserted section -->
+
+    <hr />
+    <div id="total-value-container" style="display: none">
+        <div class="row ">
+            <div class="col-md-4">
+            <h4> Subtotal </h4>
+            </div>
+            <div class="col-md-3">
+                <input type="number" placeholder="0.00" id="sub_total" disabled readonly>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <h4> + tip </h4>
+            </div>
+            <div class="col-md-3">
+                6.5%
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <h4> + tax </h4>
+            </div>
+            <div class="col-md-3">
+                18%
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <h4> Grand Total </h4>
+            </div>
+            <div class="col-md-3 grand-total">
+                <input type="number" placeholder="0.00" id="grand_total" disabled readonly>
+            </div>
+        </div>
+    </div>
