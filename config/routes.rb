@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   root to: "dashboard#index"
   get 'people/:id', to: 'static#person'
 
-  resources :dashboard, only: [:index]
+  resources :dashboard, only: [:index, :show]
   resources :expenses, only: [:new, :create, :show]
 end

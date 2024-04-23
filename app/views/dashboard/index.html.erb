@@ -1,25 +1,26 @@
 <div class="container text-primary">
-    <p class="text-primary"><%= @user.email %></p>
+    <p class="text-primary">Hello, <%= @user.name %></p>
 </div>
 
 
 <div class="dashboard-wrapper">
   <aside class="side-bar-area">
     <div class="friends-list">
-      <p class="friends-list-header">FRIENDS</p>
-      <a class="friend-name" href="#">anbu</a>
-      <a class="friend-name" href="#">barath</a>
+      <% @users.each do |user| %>
+        <%= link_to "#{user.name}", dashboard_path(user.id) %>
+      <% end %>
     </div>
   </aside>
   <div class="main-area">
     <div class="top-bar">
       <h1 class="top-bar-title">Dashboard</h1>
       <div class="top-bar-actions">
-        <%= link_to "Add Expense", new_expense_path %>
-        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#expenseModal">Add an expense</button>
-        <button class="btn btn-secondary" type="button">Settle up</button>
+        <%= link_to "Add Expense", new_expense_path, class: "btn btn-primary" %>
+        <button class="btn btn-secondary" type="button" disabled>Settle up</button>
       </div>
     </div>
+
+    <%= render partial: "shared/expenses/list_expenses", locals: {data: "adfasdf"}%>
     <div class="dashboard-balances">
       <div class="balances-bar">
         <div class="balance-block">
@@ -75,20 +76,3 @@
   </div>
 </div>
 
-<div id="expenseModal" class="modal fade" aria-hidden="true" aria-labelledby="expenseModalLabel" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="expenseModalLabel" class="modal-title">Add an expense</h5>
-        <button class="btn-close" aria-label="Close" data-bs-dismiss="modal" type="button"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Fields to be added -->
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-        <button class="btn btn-primary" type="button">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
