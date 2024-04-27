@@ -1,1 +1,94 @@
-afasdfasfasdfasdfas
+
+<!-- Total balance -->
+<div class="row">
+  <div class="col">
+    <h5> <%= user.id != current_user.id ? "#{user.name} Total Balance: " : "Your Total Balance: "%> $ <%= total_balance %></h5>
+  </div>
+</div>
+
+<!-- Total you owe -->
+<div class="row">
+  <div class="col">
+    <h5><%= user.id != current_user.id ? "Total #{user.name} owe: " : "Total you owe: "%> $ <%= total_owing %></h5>
+  </div>
+</div>
+
+<!-- Total you are owed -->
+<div class="row">
+  <div class="col">
+    <h5><%= user.id != current_user.id ? "Total #{user.name} is owed: " : "Total you are owed: "%> $ <%= total_owed %></h5>
+  </div>
+</div>
+
+<hr />
+<!-- List of friends you owe -->
+<div class="row">
+  <div class="col">
+    
+      <h2><%= user.id != current_user.id ? "Friends #{user.name} owe: " : "Friends you owe: "%> </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Total Owed</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% if friends_i_owe.present? %>
+          <% friends_i_owe.each do |friend, expenses| %>
+            <tr>
+              <td>
+                <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" width="40" />
+                <%= friend.name %>
+              </td>
+              <td><%= friend.email %></td>
+              <td>$ <%= expenses.sum(&:amount) %></td>
+            </tr>
+          <% end %>
+        <% else %>
+         <tr>
+            <td>No data present</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<hr />
+<!-- List of friends who owe you-->
+<div class="row">
+  <div class="col">
+    
+      <h2><%= user.id != current_user.id ? "Friends who owe #{user.name}" : "Friends who owe you"%> </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Total Owed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if friends_who_owe.present? %>
+            <% friends_who_owe.each do |friend, expenses| %>
+              <tr>
+                <td>
+                  <!-- Random face icon -->
+                  <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" width="40" />
+                  <%= friend.name %>
+                </td>
+                <td><%= friend.email %></td>
+                <td>$ <%= expenses.sum(&:amount) %></td>
+              </tr>
+            <% end %>
+          <% else %>
+          <tr>
+            <td>No data present</td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>

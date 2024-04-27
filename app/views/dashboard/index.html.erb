@@ -1,78 +1,44 @@
-<div class="container text-primary">
-    <p class="text-primary">Hello, <%= @user.name %></p>
+<div class="container-fluid text-primary">
+    
+    <div class="row">
+      <div class="col-md-3">
+        <h2 class="text-primary mt-0" style="margin-top: 0">Hello, <%= @user.name %></h2>
+      </div>
+      <div class="col-md-9">
+        <div class="card-header">
+            <div style="display: flex; justify-content: flex-end;">
+              
+              <div class="top-bar-actions">
+                <%= link_to "Add Expense", new_expense_path, class: "btn btn-primary" %>
+                <button class="btn btn-secondary" type="button" disabled>Settle up</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
 </div>
 
-
-<div class="dashboard-wrapper">
-  <aside class="side-bar-area">
-    <div class="friends-list">
-      <% @users.each do |user| %>
-        <%= link_to "#{user.name}", dashboard_path(user.id) %>
-      <% end %>
-    </div>
-  </aside>
-  <div class="main-area">
-    <div class="top-bar">
-      <h1 class="top-bar-title">Dashboard</h1>
-      <div class="top-bar-actions">
-        <%= link_to "Add Expense", new_expense_path, class: "btn btn-primary" %>
-        <button class="btn btn-secondary" type="button" disabled>Settle up</button>
-      </div>
-    </div>
-
-    <%= render partial: "shared/expenses/list_expenses", locals: {data: "adfasdf"}%>
-    <div class="dashboard-balances">
-      <div class="balances-bar">
-        <div class="balance-block">
-          <p>total balance</p>
-          <p>+ $11.50</p>
-        </div>
-        <div class="balance-block">
-          <p>you owe</p>
-          <p>$0.00</p>
-        </div>
-        <div class="balance-block">
-          <p>you are owed</p>
-          <p>$11.50</p>
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Friends List</h5>
+          <div class="list-group">
+            <% @users.each do |user| %>
+              <%= link_to "#{user.name}", dashboard_path(user.id), class: "list-group-item list-group-item-action" if user.id != current_user.id %>
+            <% end %>
+          </div>
         </div>
       </div>
-      <div class="dashboard-detail">
-        <div class="detail-block">
-          <h2 class="detail-title">you owe</h2>
-          <div class="user-detail">
-            <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" />
-            <div class="user-info">
-              <p>anbu</p>
-              <p>owes you $11.50</p>
-            </div>
-          </div>
-          <div class="user-detail">
-            <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" />
-            <div class="user-info">
-              <p>anbu</p>
-              <p>owes you $11.50</p>
-            </div>
-          </div>
-        </div>
-        <div class="detail-block">
-          <h2 class="detail-title">you are owed</h2>
-          <div class="user-detail">
-            <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" />
-            <div class="user-info">
-              <p>anbu</p>
-              <p>owes you $11.50</p>
-            </div>
-          </div>
-          <div class="user-detail">
-            <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" />
-            <div class="user-info">
-              <p>anbu</p>
-              <p>owes you $11.50</p>
-            </div>
-          </div>
+    </aside>
+    <div class="col-md-9">
+      <div class="card">
+        
+        <div class="card-body">
+          <%= render partial: "shared/expenses/list_expenses", locals: {total_balance: @total_balance, total_owing: @total_owing, total_owed: @total_owed, friends_who_owe: @friends_who_owe,  friends_i_owe: @friends_i_owe, user: @user}%>
         </div>
       </div>
     </div>
   </div>
 </div>
-
