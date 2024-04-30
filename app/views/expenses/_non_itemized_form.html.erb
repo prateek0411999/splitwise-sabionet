@@ -1,12 +1,12 @@
 <div>
     <div class="form-group">
         <%= form.label :total_amount %>
-        <%= form.text_field :total_amount, class: "form-control", placeholder: "0.0", required: true, disabled: true %>
+        <%= form.text_field :total_amount, class: "form-control mb-2", placeholder: "0.0", required: true, disabled: true %>
     </div>
 
     <div class="form-group">
         <%= form.label :expense_payer_id, "Paid by" %>
-        <%= form.select :expense_payer_id, users.map{|user| [user.name, user.id]}, {} , id: 'non_itemized_expense_payer_id' %>
+        <%= form.select :expense_payer_id, users.map{|user| [user.name, user.id]}, {include_blank: true, class: "mb-2 mt-2"} , id: 'non_itemized_expense_payer_id' %>
         
         <%= form.label :split_type, " and Split" %>
         <%= form.select :split_type, { "Equally" => :equally, "Unequally" => :unequally } %>

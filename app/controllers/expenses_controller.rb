@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
 
   def create
     @expense = Expense.new(expense_params)
-    @expense.custom_sharer_expenses = params["expense"]["custom_sharer_expenses"].presence || nil
+    @expense.custom_sharer_expenses = params["expense"]["custom_sharer_expenses"].presence || nil  
     @expense.created_by_id = current_user.id
     if @expense.save!
       return redirect_to dashboard_index_path, notice: "Expense has been created successfully."

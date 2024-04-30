@@ -1,0 +1,14 @@
+<div class="card mb-2">
+    <div class="card-body">
+        <p>
+            <% 
+                expense_record = expense_sharer.expense 
+                payer = expense_record.payer
+            %>
+            <%= user.id != current_user.id ? "#{user.name} Borrowed" : "You Borrowed"%>  <span class= "text-danger"> ( $ <%= expense_sharer.amount%> ) </span> from <%= payer.name %>  for "<%= expense_record.description%>" <%= ", Item: #{expense_sharer.item.description}" if expense_record.itemized?%></span>
+            <div>
+                <p class="text-muted"> <%= format_date(expense_record.created_at) %>  </p>
+            </div>  
+        <p>
+    </div>
+</div>

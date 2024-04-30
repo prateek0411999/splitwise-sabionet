@@ -8,3 +8,5 @@
 
 
 Fabricate.times(10, :user)
+
+User.all.map{|user| user.update(password: "sabionet")}

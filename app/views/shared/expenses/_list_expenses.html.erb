@@ -2,21 +2,21 @@
 <!-- Total balance -->
 <div class="row">
   <div class="col">
-    <h5> <%= user.id != current_user.id ? "#{user.name} Total Balance: " : "Your Total Balance: "%> $ <%= total_balance %></h5>
+    <h5 class="text-secondary"> <%= user.id != current_user.id ? "#{user.name} Total Balance: " : "Your Total Balance: "%> <span class="<%= total_balance < 0 ? "text-danger" : "text-success"%>"> $ <%= total_balance %> </span> </h5>
   </div>
 </div>
 
 <!-- Total you owe -->
 <div class="row">
   <div class="col">
-    <h5><%= user.id != current_user.id ? "Total #{user.name} owe: " : "Total you owe: "%> $ <%= total_owing %></h5>
+    <h5 class="text-secondary"><%= user.id != current_user.id ? "Total #{user.name} owe: " : "Total you owe: "%> <span class="<%= total_owing > 0 ? "text-danger" : "text-success"%>"> $ <%= total_owing %> </span> </h5>
   </div>
 </div>
 
 <!-- Total you are owed -->
 <div class="row">
   <div class="col">
-    <h5><%= user.id != current_user.id ? "Total #{user.name} is owed: " : "Total you are owed: "%> $ <%= total_owed %></h5>
+    <h5 class="text-secondary"><%= user.id != current_user.id ? "Total #{user.name} is owed: " : "Total you are owed: "%><span class="<%= total_owing < 0 ? "text-danger" : "text-success"%>">  $ <%= total_owed %> </span> </h5>
   </div>
 </div>
 
@@ -92,3 +92,20 @@
       </table>
   </div>
 </div>
+
+<hr />
+
+<!-- Activity -->
+<% activities = activity.sort_by { |activity| -activity.created_at.to_i } if activity.present?%>
+<h4><%= user.id != current_user.id ? "#{user.name} Activity" : "Your Activity"%> </h4>
+<% if activities.present? %>
+  <% activities.each do |activity| %>
+      <% if activity.is_a? (Expense) %>
+        <% sharers = activity.expense_sharers %>
+        <%= render "/shared/expenses/list_lent_expenses", sharers: sharers, expense: activity, user: user, current_user: current_user %>
+      <% else %>
+        <%= render "/shared/expenses/list_borrowed_expenses", expense_sharer: activity, user: user, current_user: current_user %>
+      <% end %>
+  <% end %>
+<% end %>
+  

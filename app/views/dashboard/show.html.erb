@@ -1,1 +1,3 @@
-<%= render partial: "shared/expenses/list_expenses", locals: {total_balance: @total_balance, total_owing: @total_owing, total_owed: @total_owed, friends_who_owe: @friends_who_owe,  friends_i_owe: @friends_i_owe, user: @user}%>
+<div class="mt-4">
+    <%= render partial: "shared/expenses/list_expenses", locals: {total_balance: @total_balance, total_owing: @total_owing, total_owed: @total_owed, friends_who_owe: @friends_who_owe,  friends_i_owe: @friends_i_owe, user: @user, current_user: @current_user, activity: @complete_activity}%>
+</div>

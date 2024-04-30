@@ -37,29 +37,29 @@ class Expense < ApplicationRecord
   private
 
   def amount_including_tax(amount)
-    (amount + (amount * 0.245))&.round(2)
+    (amount + (amount * 0.245))
   end
 
-  def create_sharer(user_id, amount)
-    expense_sharers.create(user_id: user_id, amount: amount)
+  def create_sharer(user_id, amount, item_id = nil)
+    expense_sharers.create(user_id: user_id, amount: amount&.round(2), item_id: item_id)
   end
 
   def create_item(description, amount, split_equally = nil, sharer = nil)
     equally_splitted = (split_equally.present? &&  split_equally == "on") ?  true : false
-    items.create(description: description, amount: amount, split_equally: equally_splitted, user_id: sharer)
+    items.create(description: description, amount: amount, split_equally: equally_splitted)
   end 
 
   def create_equally_split_sharers
     total_sharers = sharer_ids.count + 1 #including the payer as splitting equally
     amount_per_sharer = total_amount / total_sharers
-    sharer_ids.each {|user_id| create_sharer(user_id, amount_per_sharer&.round(2)) }
+    sharer_ids.each {|user_id| create_sharer(user_id, amount_per_sharer) }
   end
 
   def create_unequally_split_sharers
     custom_sharer_expenses.each do |user_id, prct|
       if user_id != payer_id.to_s
         amount_per_sharer = total_amount * (prct["percentage"].to_f / 100.to_f)
-        create_sharer(user_id, amount_per_sharer&.round(2))
+        create_sharer(user_id, amount_per_sharer)
       end
     end
   end
@@ -74,15 +74,15 @@ class Expense < ApplicationRecord
         split_equally = item_data["split_equally"]
         sharer = item_data["sharer"]&.to_i
         total_amount_sum += amount #updating the total_amount
+        created_item = create_item(description, amount_including_tax(amount), split_equally)
         if split_equally.present? && split_equally == "on"
           # for now taxes are pre-defined so directly inputting the value
-          total_sharers = sharer_ids.size + 1 #including the payerer
-          amount_per_user_including_taxes = ((amount_including_tax(amount)) / total_sharers)&.round(2)
-          sharer_ids.each {|user_id| create_sharer(user_id, amount_per_user_including_taxes) } 
+          total_sharers = sharer_ids.size + 1 #including the payer
+          amount_per_user_including_taxes = ((amount_including_tax(amount)) / total_sharers)
+          sharer_ids.each {|user_id| create_sharer(user_id, amount_per_user_including_taxes, created_item.id) } 
         else
-          create_sharer(sharer, amount_including_tax(amount))  if sharer != payer_id 
+          create_sharer(sharer, amount_including_tax(amount), created_item.id)  if sharer != payer_id 
         end
-        create_item(description, amount, split_equally, sharer)
       end
     end
     

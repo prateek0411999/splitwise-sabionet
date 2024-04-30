@@ -1,4 +1,4 @@
-<div class="container-fluid text-primary">
+<div class="container-fluid text-primary mt-4">
     
     <div class="row">
       <div class="col-md-3">
@@ -26,7 +26,7 @@
           <h5 class="card-title">Friends List</h5>
           <div class="list-group">
             <% @users.each do |user| %>
-              <%= link_to "#{user.name}", dashboard_path(user.id), class: "list-group-item list-group-item-action" if user.id != current_user.id %>
+              <%= link_to "#{user.name}", dashboard_path(user.id), class: "list-group-item list-group-item-action" if user.id != @user.id %>
             <% end %>
           </div>
         </div>
@@ -34,9 +34,8 @@
     </aside>
     <div class="col-md-9">
       <div class="card">
-        
         <div class="card-body">
-          <%= render partial: "shared/expenses/list_expenses", locals: {total_balance: @total_balance, total_owing: @total_owing, total_owed: @total_owed, friends_who_owe: @friends_who_owe,  friends_i_owe: @friends_i_owe, user: @user}%>
+          <%= render partial: "shared/expenses/list_expenses", locals: {total_balance: @total_balance, total_owing: @total_owing, total_owed: @total_owed, friends_who_owe: @friends_who_owe,  friends_i_owe: @friends_i_owe, user: @user, current_user: @user, activity: @complete_activity}%>
         </div>
       </div>
     </div>

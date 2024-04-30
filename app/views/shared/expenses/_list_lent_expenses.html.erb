@@ -1,0 +1,33 @@
+<% sharers = sharers.group_by{|sh| sh.item} if sharers.present? && expense.itemized?  %>
+<div class="card mb-2">
+    <div class="card-body">
+        <% if expense.itemized? %>
+            <p>
+            <%= user.id != current_user.id ? "#{user.name} lent" : "You lent"%>
+                
+                <% sharers.each do |item, item_sharers| %>
+                <% item_sharers.each do |sharer|%>
+                    <span> <%= sharer.user.name%> </span>
+                    <span class= "text-success"> ( $ <%= sharer.amount%> )</span>
+                <% end %>
+                for Item : <span> <%= item.description %> </span>
+                <div>
+                    <p class="text-muted"> <%= format_date(item.created_at) %>  </p>
+                </div>
+                <% end %> 
+            <p>
+        <% else %>
+            <p>
+                <% sharers.each do |sharer| %>
+                    <% 
+                        expense_record = sharer.expense
+                    %>
+                    <%= user.id != current_user.id ? "#{user.name} lent" : "You lent"%> <span class= "text-success"> ( $ <%= sharer.amount%> ) to <%= sharer.user.name%></span> for "<%= expense_record.description%>"</span>
+                    <div>
+                        <p class="text-muted"> <%= format_date(expense_record.created_at) %>  </p>
+                    </div>
+                <% end %> 
+            <p>
+        <% end %>
+    </div>
+</div>

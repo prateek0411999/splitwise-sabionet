@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
       <%= 'Sabionet Assessment | Prateek Sharma' %>
     </title>
@@ -19,6 +20,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.8/jquery.jgrowl.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.8/jquery.jgrowl.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <% if ['sessions', 'registrations'].include?(controller_name) %>
@@ -28,14 +31,14 @@
       </main>
     </body>
   <% else %>
-    <body class="d-flex flex-column h-100">
+    <body>
       <%= render 'layouts/top_nav' %>
-      <main class="flex-shrink-0">
-        <div class="container">
-          <%= yield %>
-        </div>
-      </main>
+      <div class="container">
+        <%= yield %>
+      </div>
     </body>
   <% end %>
   <%= render 'layouts/jgrowl_notifications' %>
+
+  <div class="mb-3"></div>
 </html>
